@@ -7,7 +7,6 @@ import { RiCloseFill } from "react-icons/ri/index.esm";
 export default function AssignRoleToUser(props) {
     const {user, roles} = props;
     const [modalState, setModalState] = useState(false);
-
     const { data, setData, post,  delete: destroy, processing, errors, clearErrors, reset } = useForm({
         roles: user.roles.map(i => i.id +'') || [],
     })
@@ -29,24 +28,22 @@ export default function AssignRoleToUser(props) {
     function submit(e) {
         e.preventDefault()
         post(route('users.assign_role', user), {
-            onSuccess: ()=>{
+            onSuccess: (e)=>{
                 setModalState(false)
-            }
+            },
         })
     }
 
     const modalTogleAndReset = ()=>{
         if(!processing){
             setModalState(prev => prev = !prev);
-            clearErrors()
-            reset()
         }
     }
 
 
     return (
         <>
-            <button onClick={modalTogleAndReset} type="button" className="rounded bg-cyan-400 dark:bg-cyan-500 px-2 py-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#4ade80] transition duration-150 ease-in-out dark:hover:bg-cyan-600 hover:bg-cyan-500 hover:shadow-[0_8px_9px_-4px_rgba(34,197,94,0.3),0_4px_18px_0_rgba(34,197,94,0.2)] focus:bg-cyan-500 focus:shadow-[0_8px_9px_-4px_rgba(34,197,94,0.3),0_4px_18px_0_rgba(34,197,94,0.2)] focus:outline-none focus:ring-0 active:bg-cyan-500 active:shadow-[0_8px_9px_-4px_rgba(34,197,94,0.3),0_4px_18px_0_rgba(34,197,94,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(34,197,94,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(34,197,94,0.2),0_4px_18px_0_rgba(34,197,94,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(34,197,94,0.2),0_4px_18px_0_rgba(34,197,94,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(34,197,94,0.2),0_4px_18px_0_rgba(34,197,94,0.1)] flex items-center space-x-1" data-te-ripple-init data-te-ripple-color="light">
+            <button onClick={modalTogleAndReset} type="button" className="rounded bg-cyan-400 dark:bg-cyan-500 px-2 py-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#22d3ee] transition duration-150 ease-in-out dark:hover:bg-cyan-600 hover:bg-cyan-500 hover:shadow-[0_8px_9px_-4px_rgba(8 145 178,0.3),0_4px_18px_0_rgba(8 145 178,0.2)] focus:bg-cyan-500 focus:shadow-[0_8px_9px_-4px_rgba(8 145 178,0.3),0_4px_18px_0_rgba(8 145 178,0.2)] focus:outline-none focus:ring-0 active:bg-cyan-500 active:shadow-[0_8px_9px_-4px_rgba(8 145 178,0.3),0_4px_18px_0_rgba(8 145 178,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(8 145 178,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(8 145 178,0.2),0_4px_18px_0_rgba(8 145 178,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(8 145 178,0.2),0_4px_18px_0_rgba(8 145 178,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(8 145 178,0.2),0_4px_18px_0_rgba(8 145 178,0.1)] flex items-center space-x-1" data-te-ripple-init data-te-ripple-color="light">
                 <div>
                     <BsShield className='w-4 h-4 text-white flex-shrink-0'/>
                 </div>

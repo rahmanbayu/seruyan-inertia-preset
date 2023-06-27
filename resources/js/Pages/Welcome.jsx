@@ -1,5 +1,5 @@
 import Guest from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import {RiEyeCloseLine, RiEyeFill} from 'react-icons/ri'
 
@@ -25,16 +25,15 @@ export default function Welcome({logo}) {
     return (
         <Guest>
             <Head title="Welcome" />
-            <div className='h-screen w-full md:h-[85vh] lg:w-[70%] md:grid grid-cols-2 relative z-10 shadow-xl overflow-hidden rounded-2xl'>
-                <div className='h-full md:h-auto dark:bg-gray-800 bg-white dark:bg-opacity-60 md:rounded-l-2xl overflow-hidden flex items-center justify-center flex-col p-10'>
+            <div className='md:container md:mx-auto h-screen w-full md:h-[85vh] lg:w-[70%] lg:grid grid-cols-2 relative z-10 shadow-xl overflow-hidden lg:rounded-2xl'>
+                <div className='h-full lg:h-auto dark:bg-gray-800 bg-white dark:bg-opacity-60 rounded-none md:rounded-2xl lg:rounded-r-none lg:rounded-l-2xl overflow-hidden flex items-center justify-center flex-col p-10'>
                     <div className='flex items-center justify-center'>
                         <img src={logo} alt="Logo kabupaten seruyan" className='h-20' />
                     </div>
                     <div className='py-8 text-center text-gray-600 dark:text-white font-bold'>
-                        <span className='md:block hidden text-sm'>Masuk ke halaman dashboard!</span>
-                        <span className='md:hidden text-lg'>Template Laravel Inertia</span>
+                        <span className='lg:block hidden text-sm'>Masuk ke halaman dashboard!</span>
+                        <span className='lg:hidden text-lg max-w-md'>Template Laravel Inertia</span>
                     </div>
-
                     <div className='w-full'>
                         <form onSubmit={submit} method='POST'>
                             <div className='relative'>
@@ -58,9 +57,9 @@ export default function Welcome({logo}) {
                                 </div>
                                 {errors.password && <div className='mt-1 text-sm text-rose-500'>{errors.password}</div>}
                             </div>
-                            <div class="flex items-center mt-7">
-                                <input id="remember" type="checkbox" value={data.remember} class="w-4 h-4 text-emerald-600 bg-gray-100 border-transparent rounded" />
-                                <label for="remember" class="ml-2 text-sm font-light dark:text-gray-100 text-gray-500">Remember Me</label>
+                            <div className="flex items-center mt-7">
+                                <input id="remember" type="checkbox" value={data.remember} className="w-4 h-4 text-emerald-600 bg-gray-100 border-transparent rounded" />
+                                <label htmlFor="remember" className="ml-2 text-sm font-light dark:text-gray-100 text-gray-500">Remember Me</label>
                             </div>
                             <div className='mt-10'>
                                 <button disabled={processing} className='block w-full text-center h-10 bg-emerald-400 hover:bg-emerald-500 transition-all duration-150 hover:shadow-lg shadow text-white text-sm'>
@@ -82,7 +81,7 @@ export default function Welcome({logo}) {
                         </form>
                     </div>
                 </div>
-                <div className='bg-gradient-to-br from-emerald-400 to-sky-400 via-emerald-500 dark:from-emerald-400/80 dark:via-emerald-300/60 dark:to-sky-400/50 md:flex flex-col justify-center  hidden rounded-r-2xl p-10'>
+                <div className='bg-gradient-to-br from-emerald-400 to-sky-400 via-emerald-500 dark:from-emerald-400/80 dark:via-emerald-300/60 dark:to-sky-400/50 lg:flex flex-col justify-center  hidden rounded-r-2xl p-10'>
                     <h1 className='text-white font-bold text-2xl'>Template Laravel Inertia</h1>
                     <p className='text-white mt-4'>Dikelola Oleh Dinas KOMINFOSANDI Kabupaten Seruyan.</p>
                 </div>

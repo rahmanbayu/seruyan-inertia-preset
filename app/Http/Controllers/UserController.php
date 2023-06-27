@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserWithPermissionAndRoleResource;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,11 +17,12 @@ class UserController extends Controller
 {
     public function index(Request $request){
         $user_query = User::filter($request->only(['search', 'sort']));
-        $users =  UserResource::collection($user_query->paginate($request->per_page ?? 20)->appends(request()->all()));
+        $users =  UserWithPermissionAndRoleResource::collection($user_query->paginate($request->per_page ?? 20)->appends(request()->all()));
         return Inertia::render('UserManagement/User/index', [
             'users' => $users,
             'filters' => request()->all('search', 'sort', 'per_page'),
             'roles' => Role::where('name', '!=', 'super admin')->get(),
+            'permissions' => Permission::get(),
         ]);
     }
     public function store(Request $request){
@@ -72,5 +75,18 @@ class UserController extends Controller
         $user->syncRoles($request->roles);
 
         return redirect()->route('users.index')->with('success', 'Role berhasil disesuaikan!');
+    }
+
+    public function assign_direct_permission(User $user, Request $request){
+        $request->validate([
+            'permissions' => 'nullable|array',
+            'permissions.*' => [ 'numeric', 'exists:permissions,id' ]
+        ]);
+        if($user->id == 1){
+            return redirect()->route('users.index')->with('failed', 'User ini sudah diset menjadi super admin!');
+        }
+        $user->syncPermissions($request->permissions);
+
+        return redirect()->route('users.index')->with('success', 'Permission berhasil disesuaikan!');
     }
 }

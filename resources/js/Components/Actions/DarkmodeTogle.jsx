@@ -26,7 +26,7 @@ export default function DarkmodeTogle() {
         selectTheme('light')
       }
 
-    }} className={`dark:justify-end justify-start fixed bottom-7 right-7 flex items-center border border-gray-300 dark:border-gray-700 rounded-full w-16 h-8 dark:bg-gray-800 bg-white transition-all duration-150`}>
+    }} className={`dark:justify-end justify-start fixed top-7 md:bottom-7 right-7 flex items-center border border-gray-300 dark:border-gray-700 rounded-full w-16 h-8 dark:bg-gray-800 bg-white transition-all duration-150 z-20`}>
         <div className='flex items-center justify-between w-full px-2'>
             <FaMoon className='w-5 h-5 text-emerald-400'/>
             <IoMdSunny className='w-5 h-5 text-orange-400'/>

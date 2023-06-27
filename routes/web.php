@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,11 +24,15 @@ use Inertia\Inertia;
 Route::get('/', WelcomeController::class)->middleware(['guest'])->name('welcome');
 
 Route::middleware('auth')->group(function () {
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
-    Route::post('users', [UserController::class, 'store'])->name('users.store');
-    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('users/{user}', [UserController::class, 'delete'])->name('users.delete');
-    Route::post('users/{user}', [UserController::class, 'assign_role'])->name('users.assign_role');
+
+    Route::middleware(['permission:manage users'])->group(function (){
+        Route::get('users', [UserController::class, 'index'])->name('users.index');
+        Route::post('users', [UserController::class, 'store'])->name('users.store');
+        Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('users/{user}', [UserController::class, 'delete'])->name('users.delete');
+        Route::post('users/{user}', [UserController::class, 'assign_role'])->name('users.assign_role');
+        Route::post('users/{user}/permissions', [UserController::class, 'assign_direct_permission'])->name('users.assign_direct_permission');
+    });
 
     Route::middleware(['role:super admin'])->group(function (){
         Route::get('roles', [RoleController::class, 'index'])->name('roles.index');

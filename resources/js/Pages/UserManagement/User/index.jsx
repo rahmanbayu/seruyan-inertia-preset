@@ -11,6 +11,7 @@ import { BsShieldExclamation } from 'react-icons/bs';
 import CreateUser from './CreateUser';
 import EditUser from './EditUser';
 import AssignRoleToUser from './AssignRoleToUser';
+import AssignDirectPermissionToUser from './AssignDirectPermissionToUser';
 
 export default function index(props) {
     const {meta, data} = props.users;
@@ -56,8 +57,8 @@ export default function index(props) {
           {/* header */}
         <div className='flex flex-col md:flex-row md:items-center md:space-y-0 space-y-4 justify-between'>
           <div>
-            <h1 className='font-medium text-gray-700 dark:text-gray-200'>Role</h1>
-            <p className="mt-1 text-xs text-gray-400">Lorem ipsum dolor sit amet.</p>
+            <h1 className='font-medium text-gray-700 dark:text-gray-200'>User</h1>
+            <p className="mt-1 text-xs text-gray-400">Manajemen data user berserta role & permission.</p>
           </div>
           <div className="flex md:flex-row flex-col-reverse md:items-center gap-x-2 md:gap-y-0 gap-y-4">
             <div className='md:w-auto w-full'>
@@ -90,6 +91,9 @@ export default function index(props) {
                                     </th>                                    
                                     <th scope="col" className="px-2 py-4">
                                         <span className='cursor-pointer'>Roles</span>
+                                    </th>                                    
+                                    <th scope="col" className="px-2 py-4">
+                                        <span className='cursor-pointer'>Direct Permission</span>
                                     </th>
                                     <th scope="col" className="px-2 py-4 text-right">
                                         <span>Action</span>
@@ -105,14 +109,23 @@ export default function index(props) {
                                             <td className="whitespace-nowrap px-2 py-4">{user.name}</td>
                                             <td className="whitespace-nowrap px-2 py-4">{user.email}</td>
                                             <td className="whitespace-nowrap px-2 py-4">
-                                                <div className='flex items-center gap-1 max-w-xs flex-wrap'>
+                                                <div className='flex items-center gap-0.5 max-w-xs flex-wrap'>
                                                     {user.roles.map((item, index )=> (
-                                                        <span className='text-[0.7rem] text-white bg-gray-400 dark:bg-gray-950 px-1 py-0.5 inline-block' key={index}>{item.name}</span>
+                                                        <span className={`${item.name == 'super admin' ? 'bg-cyan-400 dark:bg-cyan-500' : 'bg-gray-400 dark:bg-gray-950'} text-[0.7rem] text-white px-1 py-0.5 inline-block font-medium`} key={index}>{item.name}</span>
+                                                    ))}
+                                                </div>
+                                            </td>                                            
+                                            <td className="whitespace-nowrap px-2 py-4">
+                                                <div className='flex items-center gap-0.5 max-w-xs flex-wrap'>
+                                                    {user.direct_permissions.map((item, index )=> (
+                                                        <span className='text-[0.7rem] text-white bg-gray-400 dark:bg-gray-950 px-1 py-0.5 inline-block font-medium' key={index}>{item.name}</span>
                                                     ))}
                                                 </div>
                                             </td>
                                             <td className="whitespace-nowrap px-2 py-4">
                                                 <div className='flex items-center justify-end'>
+                                                  <AssignDirectPermissionToUser permissions={props.permissions} user={user}/>
+                                                  <div className='pl-2'></div>
                                                   <AssignRoleToUser roles={props.roles} user={user}/>
                                                   <div className='pl-2'></div>
                                                   <EditUser user={user}/> 

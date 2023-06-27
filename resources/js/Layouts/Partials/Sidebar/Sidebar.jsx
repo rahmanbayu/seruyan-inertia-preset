@@ -4,9 +4,14 @@ import NavItemLink from "./NavItemLink";
 import { useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { BsShield, BsShieldExclamation } from "react-icons/bs";
+import { usePage } from "@inertiajs/react";
+import { CiLogout } from "react-icons/ci/index.esm";
+import LogoutSidebarItem from "./LogoutSidebarItem";
 
 export default function Sidebar({user}) {
     const [fold, setFold] = useState(false);
+    const { auth  } = usePage().props;
+    const {roles, permissions} = auth;
     return (
         <div className={`${fold ? 'w-14' : 'w-[22%]'} lg:block hidden min-h-screen bg-white dark:bg-gray-900 shadow-lg relative transition-all duration-150`}>
             <div className={`${fold ? 'scale-0' : 'py-6  space-y-2'} transition-all duration-150 flex items-center justify-center flex-col transform`}>
@@ -18,15 +23,29 @@ export default function Sidebar({user}) {
                     <CiGrid41 className='w-4 h-4 text-inherit flex-shrink-0'/>
                 </NavItemLink>
                 <div className="shrink-0 bg-gray-200 dark:bg-gray-800 h-[1px] w-full"></div>
-                <NavItemLink route_name='users.index' title='Users' fold={fold} setFold={setFold}>
-                    <CiUser className='w-4 h-4 text-inherit flex-shrink-0'/>
-                </NavItemLink>            
-                <NavItemLink route_name='roles.index' title='Roles' fold={fold} setFold={setFold}>
-                    <BsShield className='w-4 h-4 text-inherit flex-shrink-0'/>
-                </NavItemLink>
-                <NavItemLink route_name='permissions.index' title='Permission' fold={fold} setFold={setFold}>
-                    <BsShieldExclamation className='w-4 h-4 text-inherit flex-shrink-0'/>
-                </NavItemLink>
+                {
+                    permissions.includes('manage users') || roles.includes('super admin') &&(
+                        <NavItemLink route_name='users.index' title='Users' fold={fold} setFold={setFold}>
+                            <CiUser className='w-4 h-4 text-inherit flex-shrink-0'/>
+                        </NavItemLink>       
+                    )
+                }
+                {
+                    roles.includes('super admin') && (
+                        <>
+                            <NavItemLink route_name='roles.index' title='Roles' fold={fold} setFold={setFold}>
+                                <BsShield className='w-4 h-4 text-inherit flex-shrink-0'/>
+                            </NavItemLink>
+                            <NavItemLink route_name='permissions.index' title='Permission' fold={fold} setFold={setFold}>
+                                <BsShieldExclamation className='w-4 h-4 text-inherit flex-shrink-0'/>
+                            </NavItemLink>
+                        </>
+                    )
+                }
+
+                <LogoutSidebarItem title="Logout" fold={fold}>
+                    <CiLogout className='w-4 h-4 text-inherit flex-shrink-0'/>
+                </LogoutSidebarItem>
             </div>
             <button onClick={()=>setFold(prev => prev = !prev)} className={`${fold ? 'right-1/2 translate-x-1/2' : 'right-0'} transform px-3 h-14 flex items-center justify-center bg-transparent absolute top-0 transition-all duration-150`}>
                 {

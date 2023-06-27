@@ -55,7 +55,7 @@ export default function index(props) {
         <div className='flex flex-col md:flex-row md:items-center md:space-y-0 space-y-4 justify-between'>
           <div>
             <h1 className='font-medium text-gray-700 dark:text-gray-200'>Permission</h1>
-            <p className="mt-1 text-xs text-gray-400">Lorem ipsum dolor sit amet.</p>
+            <p className="mt-1 text-xs text-gray-400 max-w-md">Permission yang dapat digunakan user untuk mengakses fitur tertentu.</p>
           </div>
           <div className="flex md:flex-row flex-col-reverse md:items-center gap-x-2 md:gap-y-0 gap-y-4">
             <div className='md:w-auto w-full'>

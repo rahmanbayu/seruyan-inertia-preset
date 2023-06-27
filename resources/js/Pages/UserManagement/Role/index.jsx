@@ -57,7 +57,7 @@ export default function index(props) {
         <div className='flex flex-col md:flex-row md:items-center md:space-y-0 space-y-4 justify-between'>
           <div>
             <h1 className='font-medium text-gray-700 dark:text-gray-200'>Role</h1>
-            <p className="mt-1 text-xs text-gray-400">Lorem ipsum dolor sit amet.</p>
+            <p className="mt-1 text-xs text-gray-400">Manajemen role.</p>
           </div>
           <div className="flex md:flex-row flex-col-reverse md:items-center gap-x-2 md:gap-y-0 gap-y-4">
             <div className='md:w-auto w-full'>
@@ -108,10 +108,10 @@ export default function index(props) {
                                                 <div className='flex items-center gap-1 max-w-xs flex-wrap'>
                                                     {
                                                       role.id == 1 ?  (
-                                                        <div className='text-[0.7rem] text-white bg-emerald-400 dark:bg-emerald-500 px-1 py-0.5 inline-block'>All Privilages</div>
+                                                        <div className='text-[0.7rem] text-white bg-cyan-400 dark:bg-cyan-500 px-1 py-0.5 inline-block font-medium'>All Privilages</div>
                                                       ) : (
                                                         role.permissions.map((item, index )=> (
-                                                            <span className='text-[0.7rem] text-white bg-gray-400 dark:bg-gray-950 px-1 py-0.5 inline-block' key={index}>{item.name}</span>
+                                                            <span className='text-[0.7rem] text-white bg-gray-400 dark:bg-gray-950 px-1 py-0.5 inline-block font-medium' key={index}>{item.name}</span>
                                                         ))
                                                       )
                                                     }
