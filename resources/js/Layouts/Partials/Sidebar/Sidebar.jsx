@@ -1,17 +1,21 @@
 import { CiGrid41 } from "react-icons/ci";
 import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
 import NavItemLink from "./NavItemLink";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { BsShield, BsShieldExclamation } from "react-icons/bs";
 import { usePage } from "@inertiajs/react";
 import { CiLogout } from "react-icons/ci/index.esm";
 import LogoutSidebarItem from "./LogoutSidebarItem";
 
-export default function Sidebar({user}) {
+export default function Sidebar({user, syncStateToParent}) {
     const [fold, setFold] = useState(false);
     const { auth  } = usePage().props;
     const {roles, permissions} = auth;
+
+    useEffect(()=>{
+        syncStateToParent(fold)
+    },[fold])
     return (
         <div className={`${fold ? 'w-14' : 'w-[22%]'} lg:block hidden min-h-screen bg-white dark:bg-gray-900 shadow-lg relative transition-all duration-150`}>
             <div className={`${fold ? 'scale-0' : 'py-6  space-y-2'} transition-all duration-150 flex items-center justify-center flex-col transform`}>

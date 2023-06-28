@@ -2,10 +2,10 @@ import React from 'react'
 
 export default function ErrorPage({status}) {
    const title = {
-    503: '503: Service Unavailable',
-    500: '500: Server Error',
-    404: '404: Page Not Found',
-    403: '403: Forbidden',
+    503: '503 Service Unavailable',
+    500: '500 Server Error',
+    404: '404 Page Not Found',
+    403: '403 Forbidden',
   }[status]
 
   const description = {
@@ -16,7 +16,10 @@ export default function ErrorPage({status}) {
   }[status]
   return (
     <div className='h-screen overflow-hidden flex items-center justify-center'>
-      <div>{title}</div>
+      <div>
+        <div className='lg:text-3xl font-black text-gray-900'>{title}</div>
+        <div className='mt-2 text-gray-700'>{description}</div>
+      </div>
     </div>
   )
 }

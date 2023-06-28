@@ -80,22 +80,22 @@ export default function index(props) {
                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                     <div className="overflow-hidden">
                         <table className="min-w-full text-left text-sm font-light">
-                            <thead className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                            <thead className="font-medium text-gray-800 dark:text-gray-200">
                                 <tr>
-                                    <th scope="col" className="px-2 py-4">#</th>
-                                    <th scope="col" className="px-2 py-4">
+                                    <th scope="col" className="px-2 py-4 text-xs">#</th>
+                                    <th scope="col" className="px-2 py-4 text-xs">
                                         <span className='cursor-pointer'>Nama</span>
                                     </th>
-                                    <th scope="col" className="px-2 py-4">
+                                    <th scope="col" className="px-2 py-4 text-xs">
                                         <span className='cursor-pointer'>Email</span>
                                     </th>                                    
-                                    <th scope="col" className="px-2 py-4">
+                                    <th scope="col" className="px-2 py-4 text-xs">
                                         <span className='cursor-pointer'>Roles</span>
                                     </th>                                    
-                                    <th scope="col" className="px-2 py-4">
+                                    <th scope="col" className="px-2 py-4 text-xs">
                                         <span className='cursor-pointer'>Direct Permission</span>
                                     </th>
-                                    <th scope="col" className="px-2 py-4 text-right">
+                                    <th scope="col" className="px-2 py-4 text-xs text-right">
                                         <span>Action</span>
                                     </th>
                                 </tr>
@@ -106,8 +106,8 @@ export default function index(props) {
                                     data.map((user, index) => (
                                         <tr key={user.id}>
                                             <td className="whitespace-nowrap px-2 py-4">{meta.from + index}</td>
-                                            <td className="whitespace-nowrap px-2 py-4">{user.name}</td>
-                                            <td className="whitespace-nowrap px-2 py-4">{user.email}</td>
+                                            <td className="whitespace-nowrap px-2 py-4 max-w-[10rem] truncate">{user.name}</td>
+                                            <td className="whitespace-nowrap px-2 py-4 max-w-[13rem] truncate">{user.email}</td>
                                             <td className="whitespace-nowrap px-2 py-4">
                                                 <div className='flex items-center gap-0.5 max-w-xs flex-wrap'>
                                                     {user.roles.map((item, index )=> (
