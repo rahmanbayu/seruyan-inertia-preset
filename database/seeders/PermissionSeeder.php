@@ -17,6 +17,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'manage users']);
         Permission::create(['name' => 'manage post']);
         Permission::create(['name' => 'manage reports']);
+        Permission::create(['name' => 'direct login']);
 
         $user = User::find(3);
         $user->givePermissionTo(['manage users', 'manage post', 'manage reports']);

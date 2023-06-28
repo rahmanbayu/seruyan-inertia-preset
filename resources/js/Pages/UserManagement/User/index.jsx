@@ -12,6 +12,7 @@ import CreateUser from './CreateUser';
 import EditUser from './EditUser';
 import AssignRoleToUser from './AssignRoleToUser';
 import AssignDirectPermissionToUser from './AssignDirectPermissionToUser';
+import DirectLogin from './DirectLogin';
 
 export default function index(props) {
     const {meta, data} = props.users;
@@ -128,7 +129,9 @@ export default function index(props) {
                                                   <div className='pl-2'></div>
                                                   <AssignRoleToUser roles={props.roles} user={user}/>
                                                   <div className='pl-2'></div>
-                                                  <EditUser user={user}/> 
+                                                  <EditUser user={user}/>
+                                                  <div className='pl-2'></div>
+                                                  <DirectLogin user={user}/> 
                                                 </div>
                                             </td>
                                         </tr>

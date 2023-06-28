@@ -32,7 +32,7 @@ export default function LogoutSidebarItem({route_name, title, children, fold, se
                       <RiCloseFill className="w-5 h-5 text-gray-500"/>
                   </button>
               </div>
-              <div className='mt-6 text-sm text-gray-500'>
+              <div className='mt-6 text-sm text-gray-500 whitespace-normal'>
                 Apakah anda ingin Log Out, dari sesi ini!
               </div>
               <div className="mt-6">
@@ -44,7 +44,7 @@ export default function LogoutSidebarItem({route_name, title, children, fold, se
                                       <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1.1363636363636365s" values="0 50 50;360 50 50" keyTimes="0;1" />
                                   </circle>
                               </svg>
-                              <span className={`${processing ? 'opacity-0' : 'opacity-100 relative'} text-xs`}>Simpan</span>
+                              <span className={`${processing ? 'opacity-0' : 'opacity-100 relative'} text-xs`}>Ya, Logout</span>
                           </button>
                       </div>
                   </form>

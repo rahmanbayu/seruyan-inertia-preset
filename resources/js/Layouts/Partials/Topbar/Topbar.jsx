@@ -26,7 +26,7 @@ export default function Topbar({fold}) {
   return (
     <>
       <div className={`${smallSidebar ? '' : 'fixed pointer-events-none'} h-14`}></div>
-      <nav className={`${smallSidebar ? 'fixed top-0 border-b border-gray-300 dark:border-gray-950' : 'relative shadow-lg'} bg-white h-14 px-6 dark:bg-gray-900 flex items-center justify-between z-20 w-full`}>
+      <nav className={`${smallSidebar ? 'fixed top-0 border-b border-gray-300 dark:border-gray-950' : 'relative shadow-lg'} bg-white h-14 px-6 dark:bg-gray-900 flex items-center justify-between z-10 w-full`}>
           <div className="flex items-center">
             {/* sidebar md bellow */}
             <div className="lg:hidden">
@@ -38,15 +38,15 @@ export default function Topbar({fold}) {
                   <div className={`${smallSidebar ? 'w-4' : 'w-0'} h-[2px] bg-gray-600 dark:bg-gray-200 transform -rotate-45 absolute top-1/2 left-1/2 transition-all duration-150 ease-in-out rounded-full -translate-x-1/2 -translate-y-1/2`}>{' '}</div>
               </button>
             </div>
-            <div className={`${fold ? '' : 'lg:opacity-0 duration-150'} transition-all flex items-center ml-5`}>
+            <div className={`${fold ? '' : 'lg:opacity-0 duration-150'} transition-all flex items-center ml-4`}>
               <div className="">
                 <img className="h-8" alt='Profile placeholder' src={`https://source.boringavatars.com/beam/60/${props.auth.user.name}%20Mitchell?colors=264653,2a9d8f,e9c46a,f4a261,e76f51`}/>
               </div>
-              <div className="text-xs max-w-[9rem] truncate font-medium ml-2 text-gray-700 dark:text-gray-200">{props.auth.user.name}</div>
+              <div className="text-xs max-w-[9rem] truncate font-medium ml-2 text-gray-600 dark:text-gray-200">{props.auth.user.name}</div>
             </div>
           </div>
-          <div className='flex items-center  '>
-                <button className="justify-center h-7 rounded-full relative" onClick={()=>{ if(localStorage.getItem('theme') == 'light' || localStorage.getItem('theme') == null){ selectTheme('dark') }else{ selectTheme('light') } }}>
+          <div className='flex items-center  mr-4'>
+                <button className="flex items-center justify-center h-7 w-5 relative" onClick={()=>{ if(localStorage.getItem('theme') == 'light' || localStorage.getItem('theme') == null){ selectTheme('dark') }else{ selectTheme('light') } }}>
                     <FaMoon className='w-5 h-5 text-emerald-400 dark:scale-100 scale-0 transition-all duration-150 transform absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
                     <IoMdSunny className='w-5 h-5 text-orange-400 dark:scale-0 scale-100 transition-all duration-150 transform absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/>
                 </button>

@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\DirectLoginController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,7 +27,6 @@ use Inertia\Inertia;
 Route::get('/', WelcomeController::class)->middleware(['guest'])->name('welcome');
 
 Route::middleware('auth')->group(function () {
-
     Route::middleware(['permission:manage users'])->group(function (){
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::post('users', [UserController::class, 'store'])->name('users.store');
@@ -32,6 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('users/{user}', [UserController::class, 'delete'])->name('users.delete');
         Route::post('users/{user}', [UserController::class, 'assign_role'])->name('users.assign_role');
         Route::post('users/{user}/permissions', [UserController::class, 'assign_direct_permission'])->name('users.assign_direct_permission');
+        Route::post('users/{user}/login', DirectLoginController::class)->name('users.direct_login')->middleware(['permission:direct login']);
     });
 
     Route::middleware(['role:super admin'])->group(function (){

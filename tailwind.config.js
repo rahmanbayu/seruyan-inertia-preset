@@ -15,6 +15,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                rampantone: ['Rampart One', ...defaultTheme.fontFamily.sans],
             },
         },
     },

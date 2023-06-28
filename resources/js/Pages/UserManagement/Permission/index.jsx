@@ -76,7 +76,7 @@ export default function index(props) {
                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                     <div className="overflow-hidden">
                         <table className="min-w-full text-left text-sm font-light">
-                            <thead className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                            <thead className="font-medium text-xs text-gray-800 dark:text-gray-200">
                                 <tr>
                                     <th scope="col" className="px-2 py-4">#</th>
                                     <th scope="col" className="px-2 py-4">
