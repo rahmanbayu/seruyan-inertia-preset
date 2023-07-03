@@ -1,4 +1,9 @@
 @tailwind base;
+
+body * {
+    @apply transition-colors duration-150;
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--secondary) var(--primary);

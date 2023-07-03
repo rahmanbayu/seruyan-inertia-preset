@@ -4,7 +4,7 @@ import { LuEdit } from "react-icons/lu";
 import { RiCloseFill } from "react-icons/ri/index.esm";
 
 export default function EditUser(props) {
-const { user } = props;
+    const { user } = props;
     const [modalState, setModalState] = useState(false);
     const modalTogleAndReset = ()=>{
         if(!processing){

@@ -1,9 +1,7 @@
 import { useForm } from '@inertiajs/react';
-import { useState } from 'react';
-import { RiCloseFill } from 'react-icons/ri/index.esm';
+import { RiCloseFill } from 'react-icons/ri';
 
-export default function LogoutSidebarItem({route_name, title, children, fold, setFold}) {
-  const [modalState, setModalState] = useState(false);
+export default function LogoutTopbarItem({modalState, setModalState}) {
   const { data, setData, post, processing, errors, clearErrors } = useForm({
   })
   function submit(e) {
@@ -18,13 +16,7 @@ export default function LogoutSidebarItem({route_name, title, children, fold, se
 
   return (
     <>
-      <button onClick={() => setModalState(prev => prev = !prev)} className={`dark:text-gray-400 text-gray-600 ${fold ? 'w-10 h-10 p-0 justify-center' : 'w-full px-2.5 space-x-2 h-8'} flex items-center dark:hover:bg-gray-950 dark:hover:text-gray-50 hover:bg-gray-100 rounded-md text-left`} >
-          {children}
-          <div className={`${fold ? 'w-0 overflow-hidden' : 'w-full'} text-sm text-inherit line-clamp-1`}>{title}</div>
-      </button>
-
       <div onClick={() => setModalState(prev => prev = !prev)} className={`${modalState ? 'bg-opacity-30' : 'bg-opacity-0 pointer-events-none'} fixed inset-0 bg-black transition-all duration-150 z-20`}></div>
-      
       <div className={`${modalState ? '' : 'translate-y-5 opacity-0 pointer-events-none'} transform transition-all duration-150 ease-in fixed inset-0 flex items-center justify-center pointer-events-none backdrop-blur-sm z-20`}>
           <div className={`${modalState ? 'pointer-events-auto' : 'pointer-events-none'} bg-white w-[90%] sm:w-[85%] md:w-1/2 lg:w-[40%] rounded-2xl p-4 max-h-[90vh] overflow-y-auto text-sm shadow-xl`}>
               <div className="flex items-center justify-between">

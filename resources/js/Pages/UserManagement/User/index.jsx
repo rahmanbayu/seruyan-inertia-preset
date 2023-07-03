@@ -7,12 +7,14 @@ import pickBy from 'lodash/pickBy';
 import Pagination from '@/Components/Actions/Pagination';
 import DisableActionButton from '@/Components/Actions/DisableActionButton';
 import { HiOutlineTrash } from 'react-icons/hi';
-import { BsShieldExclamation } from 'react-icons/bs';
+import { BsShield, BsShieldExclamation } from 'react-icons/bs';
 import CreateUser from './CreateUser';
 import EditUser from './EditUser';
 import AssignRoleToUser from './AssignRoleToUser';
 import AssignDirectPermissionToUser from './AssignDirectPermissionToUser';
 import DirectLogin from './DirectLogin';
+import { LuEdit } from 'react-icons/lu';
+import { MdLogin } from 'react-icons/md';
 
 export default function index(props) {
     const {meta, data} = props.users;
@@ -124,15 +126,62 @@ export default function index(props) {
                                                 </div>
                                             </td>
                                             <td className="whitespace-nowrap px-2 py-4">
-                                                <div className='flex items-center justify-end'>
-                                                  <AssignDirectPermissionToUser permissions={props.permissions} user={user}/>
-                                                  <div className='pl-2'></div>
-                                                  <AssignRoleToUser roles={props.roles} user={user}/>
-                                                  <div className='pl-2'></div>
-                                                  <EditUser user={user}/>
-                                                  <div className='pl-2'></div>
-                                                  <DirectLogin user={user}/> 
-                                                </div>
+                                            {
+                                                (user.id == 1 && !props.auth.roles.includes('super admin')) ? (
+                                                    <div  className='flex items-center justify-end'>
+                                                        {
+                                                            props.auth.roles.includes('super admin') &&(
+                                                                <>
+                                                                    <DisableActionButton title="permission">
+                                                                        <BsShieldExclamation className='w-4 h-4 text-white flex-shrink-0'/>
+                                                                    </DisableActionButton>
+                                                                    <div className='pl-2'></div>
+                                                                </>
+                                                            )
+                                                        }
+                                                        <DisableActionButton title="role">
+                                                            <BsShield className='w-4 h-4 text-white flex-shrink-0'/>
+                                                        </DisableActionButton>
+                                                        <div className='pl-2'></div>
+                                                        <DisableActionButton title="edit">
+                                                            <LuEdit className='w-4 h-4 text-white flex-shrink-0'/>
+                                                        </DisableActionButton>
+                                                        {
+                                                            (props.auth.permissions.includes('direct login') || props.auth.roles.includes('super admin')) &&(
+                                                                <>
+                                                                    <div className='pl-2'></div>
+                                                                    <DisableActionButton title="login">
+                                                                        <MdLogin className='w-4 h-4 text-white flex-shrink-0'/>
+                                                                    </DisableActionButton>
+                                                                </>
+                                                            )
+                                                        }
+                                                    </div>
+                                                ):(
+                                                    <div className='flex items-center justify-end'>
+                                                        {
+                                                            props.auth.roles.includes('super admin') &&(
+                                                                <>
+                                                                    <AssignDirectPermissionToUser permissions={props.permissions} user={user}/>
+                                                                    <div className='pl-2'></div>
+                                                                </>
+                                                            )
+                                                        }
+                                                        <AssignRoleToUser roles={props.roles} user={user}/>
+                                                        <div className='pl-2'></div>
+                                                        <EditUser user={user}/>
+                                                        {
+                                                                (props.auth.permissions.includes('direct login') || props.auth.roles.includes('super admin')) &&(
+                                                                    <>
+                                                                        <div className='pl-2'></div>
+                                                                        <DirectLogin user={user}/> 
+                                                                    </>
+                                                                )
+                                                        }
+                                                    </div>
+                                                )
+                                            }
+
                                             </td>
                                         </tr>
                                     ))

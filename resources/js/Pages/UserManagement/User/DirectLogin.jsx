@@ -18,7 +18,7 @@ export default function DirectLogin(props) {
 
     function submit(e) {
         e.preventDefault()
-        post(route('users.direct_login'), {
+        post(route('users.direct_login', user), {
             onSuccess: ()=>{
                 setModalState(false)
             }

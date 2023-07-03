@@ -33,7 +33,6 @@ Route::middleware('auth')->group(function () {
         Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('users/{user}', [UserController::class, 'delete'])->name('users.delete');
         Route::post('users/{user}', [UserController::class, 'assign_role'])->name('users.assign_role');
-        Route::post('users/{user}/permissions', [UserController::class, 'assign_direct_permission'])->name('users.assign_direct_permission');
         Route::post('users/{user}/login', DirectLoginController::class)->name('users.direct_login')->middleware(['permission:direct login']);
     });
 
@@ -45,6 +44,9 @@ Route::middleware('auth')->group(function () {
         Route::post('roles/{role}', [RoleController::class, 'asign_permission'])->name('roles.asign_permission');
 
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
+
+        //karena terdapat beberapa permission yang sensitif jadi kita set hanya super admin yang bisa memberikan direct permission
+        Route::post('users/{user}/permissions', [UserController::class, 'assign_direct_permission'])->name('users.assign_direct_permission');
     });
 });
 

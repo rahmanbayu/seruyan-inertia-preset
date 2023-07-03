@@ -8,6 +8,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -69,9 +70,31 @@ class UserController extends Controller
             'roles' => 'nullable|array',
             'roles.*' => [ 'numeric', $exist_rule ]
         ]);
-        if($user->id == 1 && !in_array(1, $request->roles)){
-            return redirect()->route('users.index')->with('failed', 'User ini sudah diset menjadi super admin!');
+
+        // ini secure super admin biar role super admin tidak bisa diubah kalo bukan dirinya sendiri
+        if($user->id == 1 && Auth::id() != $user->id){
+            return redirect()->route('users.index')->with('failed', 'User tidak dapat diedit [super admin]!');
         }
+        // walupun super admin bisa merubah dirinya sendiri kita prevent dia untuk demot dirinya sendiri
+        //jaga jaga kalo user change id lewai inpect element
+        if($user->id == 1 && Auth::id() == $user->id && !in_array(1, $request->roles)){
+            return redirect()->route('users.index')->with('failed', 'User sudah disetup menjadi super admin!');
+        }
+
+
+        // secure admin tidak bisa demot dirinya sendiri
+        // jika user merubah data dirina sendiri di request roles tidak ada nilai 2/id dari role "admin" return back dengan warning
+        if(Auth::id() == $user->id && Auth::user()->hasRole('admin') && !in_array(2, $request->roles)){
+            return redirect()->route('users.index')->with('failed', 'User ini sudah setup menjadi admin!');
+        }
+        //secure admin tidak bisa demot sesama admin / merubah role & permision
+        if(Auth::id() != $user->id && $user->hasRole('admin')){
+            return redirect()->route('users.index')->with('failed', 'Tidak dapat merubah role & permission sesama admin!');
+        }
+
+
+
+
         $user->syncRoles($request->roles);
 
         return redirect()->route('users.index')->with('success', 'Role berhasil disesuaikan!');
@@ -82,9 +105,18 @@ class UserController extends Controller
             'permissions' => 'nullable|array',
             'permissions.*' => [ 'numeric', 'exists:permissions,id' ]
         ]);
-        if($user->id == 1){
-            return redirect()->route('users.index')->with('failed', 'User ini sudah diset menjadi super admin!');
-        }
+        
+        // if($user->id == 1 && Auth::id() != $user->id){
+        //     return redirect()->route('users.index')->with('failed', 'User tidak dapat diedit [super admin]!');
+        // }
+
+        // handle permission permission yang rawan atau 
+        //atau kita atasi saja ang bisa memasukn direct permission ini hana super admin
+
+        // if(Auth::id() != $user->id && !$user->hasRole('super admin')){
+        //     return redirect()->route('users.index')->with('failed', 'Tidak dapat merubah role & permission sesama admin!');
+        // }
+
         $user->syncPermissions($request->permissions);
 
         return redirect()->route('users.index')->with('success', 'Permission berhasil disesuaikan!');

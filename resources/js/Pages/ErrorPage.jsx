@@ -34,10 +34,10 @@ export default function ErrorPage({status}) {
         <div className='mt-2 text-gray-600'>{description}</div>
       </div> */}
 
-      <div className='flex items-center justify-center space-x-5'>
-        <div className='text-3xl font-semibold text-black'>{title}</div>
-        <div className='h-[3rem] bg-black w-[2px] transform'></div>
-        <div className='text-gray-800'>{description}</div>
+      <div className='flex items-center justify-center space-x-3 md:space-x-5'>
+        <div className='text-xl md:text-3xl font-semibold text-black'>{title}</div>
+        <div className='h-8 md:h-[3rem] bg-black w-[2px] transform'></div>
+        <div className='text-gray-800 text-sm'>{description}</div>
       </div>
     </div>
   )
