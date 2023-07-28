@@ -15,6 +15,9 @@ import AssignDirectPermissionToUser from './AssignDirectPermissionToUser';
 import DirectLogin from './DirectLogin';
 import { LuEdit } from 'react-icons/lu';
 import { MdLogin } from 'react-icons/md';
+import BannedUser from './BannedUser';
+import { RiUserUnfollowLine } from 'react-icons/ri';
+import UnbannedUser from './UnbannedUser';
 
 export default function index(props) {
     const { meta, data } = props.users;
@@ -22,6 +25,8 @@ export default function index(props) {
     const [selectedEditUser, setSelectedEditUser] = useState();
     const [selectedAssignRole, setSelectedAssignRole] = useState();
     const [selectedDirectPermission, setSelectedDirectPermission] = useState();
+    const [selectedBannedUser, setSelectedBannedUser] = useState();
+    const [selectedUnbannedUser, setSelectedUnbannedUser] = useState();
 
     const [filter, setFilter] = useState({
         search: props.filters.search || '',
@@ -64,6 +69,8 @@ export default function index(props) {
             <EditUser getter={selectedEditUser} setter={setSelectedEditUser} />
             <AssignRoleToUser roles={props.roles} getter={selectedAssignRole} setter={setSelectedAssignRole} />
             <AssignDirectPermissionToUser permissions={props.permissions} getter={selectedDirectPermission} setter={setSelectedDirectPermission} />
+            <BannedUser getter={selectedBannedUser} setter={setSelectedBannedUser} />
+            <UnbannedUser getter={selectedUnbannedUser} setter={setSelectedUnbannedUser} />
             <div className='dark:bg-gray-900 bg-white rounded-lg p-5 shadow-lg'>
                 {/* header */}
                 <div className='flex flex-col md:flex-row md:items-center md:space-y-0 space-y-4 justify-between'>
@@ -117,7 +124,7 @@ export default function index(props) {
                                                 data.map((user, index) => (
                                                     <tr key={user.id}>
                                                         <td className="whitespace-nowrap px-2 py-4">{meta.from + index}</td>
-                                                        <td className="whitespace-nowrap px-2 py-4 max-w-[10rem] truncate">{user.name}</td>
+                                                        <td className={`whitespace-nowrap px-2 py-4 max-w-[10rem] truncate ${user.is_banned ? 'text-rose-500' : ''}`}>{user.name}</td>
                                                         <td className="whitespace-nowrap px-2 py-4 max-w-[13rem] truncate">{user.email}</td>
                                                         <td className="whitespace-nowrap px-2 py-4">
                                                             <div className='flex items-center gap-0.5 max-w-xs flex-wrap'>
@@ -167,6 +174,21 @@ export default function index(props) {
                                                                     </div>
                                                                 ) : (
                                                                     <div className='flex items-center justify-end'>
+                                                                        {
+                                                                            !user.is_banned &&
+                                                                            <button onClick={() => setSelectedBannedUser(user)} type="button" className="rounded bg-red-400 dark:bg-red-500 px-2 py-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#ef4444] transition duration-150 ease-in-out dark:hover:bg-red-600 hover:bg-red-500 hover:shadow-[0_8px_9px_-4px_rgba(239,68,68,0.3),0_4px_18px_0_rgba(239,68,68,0.2)] focus:bg-red-500 focus:shadow-[0_8px_9px_-4px_rgba(239,68,68,0.3),0_4px_18px_0_rgba(239,68,68,0.2)] focus:outline-none focus:ring-0 active:bg-red-500 active:shadow-[0_8px_9px_-4px_rgba(239,68,68,0.3),0_4px_18px_0_rgba(239,68,68,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(239,68,68,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(239,68,68,0.2),0_4px_18px_0_rgba(239,68,68,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(239,68,68,0.2),0_4px_18px_0_rgba(239,68,68,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(239,68,68,0.2),0_4px_18px_0_rgba(239,68,68,0.1)] flex items-center space-x-1" data-te-ripple-init data-te-ripple-color="light">
+                                                                                <RiUserUnfollowLine className='w-4 h-4 text-white flex-shrink-0' />
+                                                                                <span className='text-[0.6rem] leading-[0]'>Banned</span>
+                                                                            </button>
+                                                                        }
+                                                                        {
+                                                                            user.is_banned &&
+                                                                            <button onClick={() => setSelectedUnbannedUser(user)} type="button" className="rounded bg-blue-400 dark:bg-blue-500 px-2 py-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b82f6] transition duration-150 ease-in-out dark:hover:bg-blue-600 hover:bg-blue-500 hover:shadow-[0_8px_9px_-4px_rgba(37,99,235,0.3),0_4px_18px_0_rgba(37,99,235,0.2)] focus:bg-blue-500 focus:shadow-[0_8px_9px_-4px_rgba(37,99,235,0.3),0_4px_18px_0_rgba(37,99,235,0.2)] focus:outline-none focus:ring-0 active:bg-blue-500 active:shadow-[0_8px_9px_-4px_rgba(37,99,235,0.3),0_4px_18px_0_rgba(37,99,235,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(37,99,235,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(37,99,235,0.2),0_4px_18px_0_rgba(37,99,235,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(37,99,235,0.2),0_4px_18px_0_rgba(37,99,235,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(37,99,235,0.2),0_4px_18px_0_rgba(37,99,235,0.1)] flex items-center space-x-1" data-te-ripple-init data-te-ripple-color="light">
+                                                                                <RiUserUnfollowLine className='w-4 h-4 text-white flex-shrink-0' />
+                                                                                <span className='text-[0.6rem] leading-[0]'>Banned</span>
+                                                                            </button>
+                                                                        }
+                                                                        <div className='pl-2'></div>
                                                                         {
                                                                             props.auth.roles.includes('super admin') && (
                                                                                 <>

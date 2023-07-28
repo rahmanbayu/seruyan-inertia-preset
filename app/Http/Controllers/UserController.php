@@ -121,4 +121,25 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Permission berhasil disesuaikan!');
     }
+
+    // bbanned user here
+
+    public function banned(User $user, Request $request){
+        if($user->isBanned() || $user->hasRole(['admin', 'super admin'])){
+            return redirect()->back()->with('failed', 'User tidak dapat di banned!');
+        }
+        $request->validate([
+            'comment' => 'required|max:100',
+        ]);
+        $user->ban([
+            'comment' => $request->comment,
+        ]);
+        return redirect()->back()->with('success', 'User berhasil di banned!');
+    }
+
+    public function unbanned(User $user){
+        $user->unban();
+        $user->bans()->forceDelete();
+        return redirect()->back()->with('success', 'User berhasil di unbanned!');
+    }
 }

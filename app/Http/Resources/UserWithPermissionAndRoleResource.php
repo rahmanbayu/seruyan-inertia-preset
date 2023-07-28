@@ -21,6 +21,7 @@ class UserWithPermissionAndRoleResource extends JsonResource
             'roles' => $this->roles,
             'permissions' => $this->permissions,
             'direct_permissions' => $this->getDirectPermissions(),
+            'is_banned' => $this->isBanned(),
         ];
     }
 }

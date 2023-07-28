@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\DirectLoginController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -23,10 +24,9 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', WelcomeController::class)->middleware(['guest'])->name('welcome');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'logs-out-banned-user'])->group(function () {
     Route::middleware(['permission:manage users'])->group(function (){
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::post('users', [UserController::class, 'store'])->name('users.store');
@@ -34,9 +34,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('users/{user}', [UserController::class, 'delete'])->name('users.delete');
         Route::post('users/{user}', [UserController::class, 'assign_role'])->name('users.assign_role');
         Route::post('users/{user}/login', DirectLoginController::class)->name('users.direct_login')->middleware(['permission:direct login']);
+        Route::post('users/{user}/banned', [UserController::class, 'banned'])->name('users.banned');
+        Route::post('users/{user}/unbanned', [UserController::class, 'unbanned'])->name('users.unbanned');
     });
 
-    Route::middleware(['role:super admin'])->group(function (){
+    Route::middleware(['role:super admin', ])->group(function (){
         Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
         Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
         Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
@@ -48,16 +50,20 @@ Route::middleware('auth')->group(function () {
         //karena terdapat beberapa permission yang sensitif jadi kita set hanya super admin yang bisa memberikan direct permission
         Route::post('users/{user}/permissions', [UserController::class, 'assign_direct_permission'])->name('users.assign_direct_permission');
     });
-});
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    Route::middleware(['permission:view activity log', ])->group(function (){
+        Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('logs.index');
+        // Route::get('logs/export', [ExportController::class, 'log_export'])->name('logs.export');
+    });
+    Route::get('/dashboard', function () { 
+    return Inertia::render('Dashboard'); 
+    })->name('dashboard');
 
-Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';
